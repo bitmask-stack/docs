@@ -3,146 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Atomic Swaps on Bitcoin with RGB 0.11.1 | BitMask</title>
-<meta name="description" content="Private, peer-to-peer, scriptless atomic swaps on Bitcoin with RGB 0.11.1. Technical paper by the BitMask / DIBA team.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Atomic Swaps on Bitcoin with RGB 0.11.1">
-<meta property="og:description" content="Private, peer-to-peer, scriptless atomic swaps on Bitcoin with RGB 0.11.1. Technical paper by the BitMask / DIBA team.">
-<meta property="og:url" content="https://bitmask-stack.github.io/docs/">
-<meta property="og:site_name" content="BitMask">
-<link rel="canonical" href="https://bitmask-stack.github.io/docs/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<title>Atomic Swaps on Bitcoin with RGB 0.11.1</title>
 <style>
-  :root {
-    --bg: #ffffff;
-    --card: #ffffff;
-    --fg: #0b0b0c;
-    --muted: #5b6472;
-    --tag: #4a5487;
-    --line: rgba(0, 0, 0, .09);
-    --card-line: rgba(0, 0, 0, .11);
-    --line-strong: rgba(0, 0, 0, .18);
-    --inv: #0b0b0c;
-    --inv-fg: #ffffff;
-    --inv-muted: rgba(255, 255, 255, .7);
-    --inv-tag: #8891c7;
-    --pill: #ffcb13;
-    --pill-fg: #000000;
-    --radius-xl: 20px;
-    --radius-pill: 999px;
-    --shadow-hover: 0 16px 40px -24px rgba(0, 0, 0, .35);
-    --content-max: 1200px;
-    --doors-max: 880px;
-    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  }
+  :root { --ink: #1b1b1f; --muted: #3a3a46; --accent: #3b3394; --paper: #fcfcff; }
   * { box-sizing: border-box; }
-  html, body { margin: 0; }
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--sans);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  header, footer { width: 100%; max-width: var(--content-max); margin: 0 auto; padding: 0 24px; }
-  header { padding-top: 24px; padding-bottom: 8px; }
-  header img { display: block; height: 30px; width: auto; }
-
-  main { flex: 1; width: 100%; max-width: var(--doors-max); margin: 0 auto; padding: clamp(32px, 8vh, 88px) 24px 48px; }
-
-  .eyebrow { font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--tag); margin: 0 0 14px; }
-  h1 { font-size: clamp(32px, 5.4vw, 56px); font-weight: 600; letter-spacing: -.035em; line-height: 1.05; margin: 0; }
-  .sub { font-size: clamp(16px, 2vw, 19px); color: var(--muted); margin: 14px 0 0; }
-  .by { font-size: 14px; color: var(--muted); margin: 10px 0 0; }
-
-  .doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: clamp(32px, 6vh, 56px); }
-  .door {
-    display: flex; flex-direction: column; min-height: 260px;
-    padding: 24px; border-radius: var(--radius-xl);
-    background: var(--card); border: 1px solid var(--card-line);
-    color: var(--fg); text-decoration: none;
-    transition: transform .15s ease, box-shadow .15s ease;
-  }
-  .door:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
-  .door:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 6px; }
-  .door--inv { background: var(--inv); border-color: var(--inv); color: var(--inv-fg); }
-  .door .tag { font-size: 11.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--tag); }
-  .door--inv .tag { color: var(--inv-tag); }
-  .door .title { font-size: 24px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; margin: 10px 0 0; }
-  .door .body { color: var(--muted); margin: 10px 0 0; }
-  .door--inv .body { color: var(--inv-muted); }
-
-  .go { margin-top: auto; padding-top: 24px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 12px 20px; border-radius: var(--radius-pill);
-    font-family: var(--sans); font-size: 15px; font-weight: 600; line-height: 1;
-    transition: transform .15s ease;
-  }
-  .door:hover .btn { transform: translateY(-1px); }
-  .btn--pill { background: var(--pill); color: var(--pill-fg); }
-  .btn--line { background: #fff; color: var(--fg); border: 1px solid var(--line-strong); }
-
-  .web { font-size: 14px; color: var(--muted); margin: 20px 0 0; }
-  .web a { color: var(--fg); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-  .web a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 6px; }
-
-  footer { border-top: 1px solid var(--line); padding-top: 18px; padding-bottom: 24px; font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-
-  @media (max-width: 640px) {
-    .doors { grid-template-columns: 1fr; }
-    .door { min-height: 0; }
-    .door .body { display: none; }
-    header, footer { padding-left: 16px; padding-right: 16px; }
-    main { padding-left: 16px; padding-right: 16px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .door, .btn { transition: none; }
-    .door:hover, .door:hover .btn { transform: none; }
-  }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: Carlito, Calibri, "Segoe UI", sans-serif; line-height: 1.5; }
+  main { max-width: 640px; margin: 0 auto; padding: 72px 24px; }
+  .tag { text-align: center; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 13px; letter-spacing: 0.4em; color: var(--muted); margin: 0 0 14px; }
+  h1 { text-align: center; font-family: "EB Garamond", Garamond, Georgia, serif; font-weight: 400; font-size: clamp(30px, 8vw, 52px); letter-spacing: 0.1em; line-height: 1.1; margin: 0; }
+  .sub { text-align: center; font-family: "EB Garamond", Garamond, Georgia, serif; font-size: 14px; letter-spacing: 0.28em; color: var(--muted); margin: 14px 0 6px; }
+  .by { text-align: center; font-size: 14px; color: var(--muted); margin: 0 0 40px; }
+  .by b { color: var(--accent); font-weight: 700; letter-spacing: 0.2em; font-size: 12px; }
+  ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
+  li { border-bottom: 1px solid var(--ink); }
+  a { display: block; padding: 18px 4px; color: var(--ink); text-decoration: none; }
+  a:hover, a:focus-visible { background: #f0efff; outline: none; }
+  .name { font-weight: 700; font-size: 18px; }
+  .meta { display: block; font-size: 14px; color: var(--muted); }
+  .logo { display: block; height: 30px; width: auto; margin: 0 auto 36px; }
+  footer { margin-top: 40px; font-size: 13px; color: var(--accent); text-align: center; }
 </style>
 </head>
 <body>
-
-<header>
-  <img src="assets/bitmask-bolt-wordmark.png" alt="BitMask">
-</header>
-
 <main>
-  <p class="eyebrow">{ UDA // BTC } &nbsp;·&nbsp; Technical paper</p>
-  <h1>Atomic Swaps on Bitcoin with RGB 0.11.1</h1>
-  <p class="sub">Private, peer-to-peer, scriptless.</p>
-  <p class="by">Gideon Nweze, Founder &nbsp;·&nbsp; BitMask / DIBA Team</p>
+  <img class="logo" src="assets/bitmask-bolt-wordmark.png" alt="BitMask">
+  <p class="tag">{ UDA // BTC }</p>
+  <h1>ATOMIC SWAPS ON BITCOIN</h1>
+  <p class="sub">PRIVATE, PEER-TO-PEER, SCRIPTLESS &nbsp;·&nbsp; WITH RGB 0.11.1</p>
+  <p class="by">Gideon Nweze, <b>FOUNDER</b> &nbsp;·&nbsp; BitMask / DIBA Team</p>
 
-  <div class="doors">
-    <a class="door door--inv" href="Atomic-Swaps-A4.pdf" aria-label="Open the A4 whitepaper PDF">
-      <span class="tag">Whitepaper · A4</span>
-      <span class="title">Read the paper</span>
-      <span class="body">Single column, 3 pages. Made for reading and printing.</span>
-      <span class="go"><span class="btn btn--pill">Open PDF →</span></span>
-    </a>
+  <ul>
+    <li>
+      <a href="Atomic-Swaps-A4.pdf">
+        <span class="name">Whitepaper (A4)</span>
+        <span class="meta">PDF, 3 pages, single column for reading and printing</span>
+      </a>
+    </li>
+    <li>
+      <a href="Atomic-Swaps-A3.pdf">
+        <span class="name">Poster layout (A3)</span>
+        <span class="meta">PDF, 1 page, framed three-column layout</span>
+      </a>
+    </li>
+  </ul>
 
-    <a class="door" href="Atomic-Swaps-A3.pdf" aria-label="Open the A3 poster PDF">
-      <span class="tag">Poster · A3</span>
-      <span class="title">See it on one page</span>
-      <span class="body">The whole paper in a framed three-column layout, 1 page.</span>
-      <span class="go"><span class="btn btn--line">Open PDF →</span></span>
-    </a>
-  </div>
-
-  <p class="web">Also as web pages: <a href="Atomic-Swaps-A4.html">A4 whitepaper</a> · <a href="Atomic-Swaps-A3.html">A3 poster</a></p>
+  <footer>Published by BitMask</footer>
 </main>
-
-<footer>
-  <span>Published by BitMask</span>
-  <span>Gideon Nweze, Founder · DIBA Team</span>
-</footer>
-
 </body>
 </html>
