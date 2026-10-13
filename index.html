@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atomic Swaps on Bitcoin with RGB 0.11.1 | BitMask</title>
 <meta name="description" content="Private, peer-to-peer, scriptless atomic swaps on Bitcoin with RGB 0.11.1. Technical paper by the BitMask / DIBA team.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Atomic Swaps on Bitcoin with RGB 0.11.1">
+<meta property="og:description" content="Private, peer-to-peer, scriptless atomic swaps on Bitcoin with RGB 0.11.1. Technical paper by the BitMask / DIBA team.">
+<meta property="og:url" content="https://bitmask-stack.github.io/docs/">
+<meta property="og:site_name" content="BitMask">
+<link rel="canonical" href="https://bitmask-stack.github.io/docs/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -83,6 +89,10 @@
   .btn--pill { background: var(--pill); color: var(--pill-fg); }
   .btn--line { background: #fff; color: var(--fg); border: 1px solid var(--line-strong); }
 
+  .web { font-size: 14px; color: var(--muted); margin: 20px 0 0; }
+  .web a { color: var(--fg); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  .web a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 6px; }
+
   footer { border-top: 1px solid var(--line); padding-top: 18px; padding-bottom: 24px; font-size: 13px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
   @media (max-width: 640px) {
@@ -125,6 +135,8 @@
       <span class="go"><span class="btn btn--line">Open PDF →</span></span>
     </a>
   </div>
+
+  <p class="web">Also as web pages: <a href="Atomic-Swaps-A4.html">A4 whitepaper</a> · <a href="Atomic-Swaps-A3.html">A3 poster</a></p>
 </main>
 
 <footer>
