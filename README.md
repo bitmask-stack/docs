@@ -17,11 +17,11 @@ Private, peer-to-peer, scriptless. By Gideon Nweze, BitMask / DIBA Team.
 | A4 白皮书 | [打开](https://bitmask-stack.github.io/docs/zh/Atomic-Swaps-A4-zh.html) | [打开](https://bitmask-stack.github.io/docs/zh/Atomic-Swaps-A4-zh.pdf) |
 | A3 海报 | [打开](https://bitmask-stack.github.io/docs/zh/Atomic-Swaps-A3-zh.html) | [打开](https://bitmask-stack.github.io/docs/zh/Atomic-Swaps-A3-zh.pdf) |
 
-Landing page: https://bitmask-stack.github.io/docs/
+Landing page: https://bitmask-stack.github.io/docs/UDA/
 
 ## Files
 
-- `index.html`: landing page
+- `UDA/index.html`: landing page (the root `index.html` redirects to it)
 - `en/`: English whitepaper (A4) and poster (A3), as HTML and PDF
 - `zh/`: Chinese versions of the same, as HTML and PDF
 - `assets/`: BitMask logo
